@@ -27,11 +27,14 @@ public class UC01CadastrarEmpresa {
 	
 	@Test
 	public void CT01UC01FBCadastraEmpresa_Com_Sucesso() {
+		empresaDAO.excluir("89424232000180");
 		assertEquals(1, empresaDAO.cadastrar(empresa));
+		empresaDAO.excluir("89424232000180");
 	}
 	
-	@Test
+	@Test(expected = RuntimeException.class)
 	public void CT02UC01A2CadastraEmpresa_Com_Cnpj_Ja_Cadastrado() {
+		empresaDAO.cadastrar(empresa);
 		assertEquals(0, empresaDAO.cadastrar(empresa));
 	}
 	
@@ -39,7 +42,7 @@ public class UC01CadastrarEmpresa {
 	public void CT03UC01A3CadastraEmpresa_Com_Cnpj_Invalido() {
 		Empresa empresa2 = new Empresa();
 		try{
-			empresa2.setCnpj("894243200018");
+			empresa2.setCnpj("8942423200018");
 			fail("Deveria disparar uma Exception!");
 		}catch(Exception e){
 			assertEquals("CNPJ Inválido!", e.getMessage());

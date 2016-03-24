@@ -2,7 +2,10 @@ package br.sceweb.modelo;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -29,8 +32,50 @@ public class EmpresaDAO {
 			throw new RuntimeException(e);
 		}
 		
-		logger.info("Chamou o método Cadastrar!");
 		return codRetorno; 
+	}
+	
+	public List<Empresa> listar() {
+		List<Empresa> empresas = new ArrayList<Empresa>();
+		PreparedStatement ps;
+		try (Connection conn = new ConnectionFactory().getConnection()) {
+			ps = conn.prepareStatement("SELECT * FROM empresa");
+			ResultSet resultSet = ps.executeQuery();
+			while (resultSet.next()) {
+				Empresa empresa = new Empresa();
+				empresa.setNomeDaEmpresa(resultSet.getString("nomeDaEmpresa"));
+				empresas.add(empresa);
+			}
+			resultSet.close();
+			ps.close();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return empresas;
+	}
+	
+	public Empresa consultar(String cnpj){
+		String sql = "SELECT * FROM empresa WHERE cnpj = '" + cnpj + "'";
+		PreparedStatement ps;
+		Empresa empresa = new Empresa();
+		
+		try (Connection conn = new ConnectionFactory().getConnection()){
+			ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				empresa.setCnpj(rs.getString("cnpj"));
+				empresa.setNomeDaEmpresa(rs.getString("nomeDaEmpresa"));
+				empresa.setNomeFantasia(rs.getString("nomeFantasia"));
+				empresa.setEndereco(rs.getString("endereco"));
+				empresa.setTelefone(rs.getString("telefone"));
+			}
+		rs.close();
+		ps.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return empresa;
 	}
 	
 	public int excluir(String cnpj){
