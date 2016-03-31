@@ -35,24 +35,23 @@ public class EmpresaDAO {
 		return codRetorno; 
 	}
 	
-	public List<Empresa> listar() {
-		List<Empresa> empresas = new ArrayList<Empresa>();
-		PreparedStatement ps;
-		try (Connection conn = new ConnectionFactory().getConnection()) {
-			ps = conn.prepareStatement("SELECT * FROM empresa");
-			ResultSet resultSet = ps.executeQuery();
-			while (resultSet.next()) {
-				Empresa empresa = new Empresa();
-				empresa.setNomeDaEmpresa(resultSet.getString("nomeDaEmpresa"));
-				empresas.add(empresa);
-			}
-			resultSet.close();
-			ps.close();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		return empresas;
-	}
+//	public Empresa listar() {
+//		Empresa empresas = new Empresa();
+//		PreparedStatement ps;
+//		try (Connection conn = new ConnectionFactory().getConnection()) {
+//			ps = conn.prepareStatement("SELECT * FROM empresa");
+//			ResultSet resultSet = ps.executeQuery();
+//			while (resultSet.next()) {
+//				Empresa empresa = new Empresa();
+//				empresa.setNomeDaEmpresa(resultSet.getString("nomeDaEmpresa"));
+//			}
+//			resultSet.close();
+//			ps.close();
+//		} catch (SQLException e) {
+//			throw new RuntimeException(e);
+//		}
+//		return empresas;
+//	}
 	
 	public Empresa consultar(String cnpj){
 		String sql = "SELECT * FROM empresa WHERE cnpj = '" + cnpj + "'";
