@@ -19,12 +19,17 @@ public class EmpresaDAO {
 		int codRetorno = 0;
 		try (Connection conn = new ConnectionFactory().getConnection()){
 			ps = conn.prepareStatement(
-					"insert into empresa (cnpj, nomeDaEmpresa, nomeFantasia, endereco, telefone) values (?,?,?,?,?)");
+					"insert into empresa (cnpj, nomeDaEmpresa, nomeFantasia, endereco, telefone, responsavel, telefoneResponsavel, "
+					+ "setor, email) values (?,?,?,?,?,?,?,?,?)");
 			ps.setString(1, empresa.getCnpj());
 			ps.setString(2, empresa.getNomeDaEmpresa());
 			ps.setString(3, empresa.getNomeFantasia());
 			ps.setString(4, empresa.getEndereco());
 			ps.setString(5, empresa.getTelefone());
+			ps.setString(6, empresa.getResponsavel());
+			ps.setString(7, empresa.getTelefoneResponsavel());
+			ps.setString(8, empresa.getSetor());
+			ps.setString(9, empresa.getEmail());
 			codRetorno = ps.executeUpdate();
 			ps.close();
 			
@@ -67,6 +72,11 @@ public class EmpresaDAO {
 				empresa.setNomeFantasia(rs.getString("nomeFantasia"));
 				empresa.setEndereco(rs.getString("endereco"));
 				empresa.setTelefone(rs.getString("telefone"));
+				empresa.setResponsavel(rs.getString("responsavel"));
+				empresa.setTelefoneResponsavel(rs.getString("telefoneResponsavel"));
+				empresa.setSetor(rs.getString("setor"));
+				empresa.setEmail(rs.getString("email"));
+				
 			}
 		rs.close();
 		ps.close();

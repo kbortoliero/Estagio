@@ -25,6 +25,10 @@ public class UC02ConsultarEmpresa {
 		empresa.setNomeFantasia("Empresa X");
 		empresa.setEndereco("Rua Taquari");
 		empresa.setTelefone("12121212");
+		empresa.setResponsavel("José");
+		empresa.setTelefoneResponsavel("111111111");
+		empresa.setSetor("Informática");
+		empresa.setEmail("info@teste.com.br");
 		
 	}
 	
