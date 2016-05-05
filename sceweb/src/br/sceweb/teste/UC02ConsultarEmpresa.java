@@ -38,6 +38,12 @@ public class UC02ConsultarEmpresa {
 		assertTrue(empresa.equals(empresaDAO.consultar("89424232000180")));
 		empresaDAO.excluir("89424232000180");
 	}
+	
+	@Test
+	public void CT02UC02A1ConsultarEmpresa_Com_CnjpInvalido() throws SQLException {
+		assertNull(empresaDAO.consultar("1"));
+	}
+	
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
